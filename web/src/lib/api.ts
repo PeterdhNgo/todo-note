@@ -25,6 +25,6 @@ export async function api<T>(
     throw new Error(message);
   }
 
-  if (res.status === 204) return undefined as T;
-  return res.json();
+  const text = await res.text();
+  return (text ? JSON.parse(text) : undefined) as T;
 }
