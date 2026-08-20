@@ -1,6 +1,7 @@
 import { useState, type SubmitEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api, setToken } from '../lib/api';
+import '../styles/auth.css';
 
 export default function Register() {
   const [email, setEmail] = useState('');
@@ -29,25 +30,33 @@ export default function Register() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div className="auth-page">
+    <form className="auth-card" onSubmit={handleSubmit}>
       <h1>Create Account</h1>
-      <p>Start organizing your thoughts with TodoNote</p>
+      <p className="auth-subtitle">Start organizing your thoughts with TodoNote</p>
 
-      <label htmlFor="email">Email Address</label>
-      <input id="email" type="email" value={email}
-        onChange={(e) => setEmail(e.target.value)} required />
+      <div className="field">
+        <label htmlFor="email">Email Address</label>
+        <input id="email" type="email" value={email}
+          onChange={(e) => setEmail(e.target.value)} required />
+      </div>
 
-      <label htmlFor="password">Password</label>
-      <input id="password" type="password" value={password}
-        onChange={(e) => setPassword(e.target.value)} required minLength={10} />
+      <div className="field">
+        <label htmlFor="password">Password</label>
+        <input id="password" type="password" value={password}
+          onChange={(e) => setPassword(e.target.value)} required minLength={10} />
+      </div>
 
-      {error && <p role="alert">{error}</p>}
+      {error && <p className="form-error" role="alert">{error}</p>}
 
-      <button type="submit" disabled={loading}>
+      <button className="btn-primary" type="submit" disabled={loading}>
         {loading ? 'Creating account…' : 'Create Account'}
       </button>
 
-      <p>Already have an account? <Link to="/login">Log in</Link></p>
+      <p className="auth-footer">
+        Already have an account? <Link to="/login">Log in</Link>
+      </p>
     </form>
+    </div>
   );
 }

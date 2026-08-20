@@ -1,6 +1,7 @@
 import { useState, type SubmitEvent } from 'react';
 import { NOTE_COLOURS, type NoteColour } from '../lib/types';
 
+
 export interface NoteDraft {
   title: string;
   content: string;
@@ -49,51 +50,57 @@ export default function NoteEditor({ mode, initial, onSave, onCancel }: Props) {
   }
 
   return (
-    <div role="dialog" aria-modal="true">
-      <form onSubmit={handleSubmit}>
-        <header>
-          <button type="button" onClick={onCancel}>Cancel</button>
-          <h2>{mode === 'text' ? 'New Text Note' : 'New Checklist'}</h2>
-          <button type="submit" disabled={saving}>{saving ? 'Saving…' : 'Save'}</button>
-        </header>
+    <div className="modal-backdrop" role="dialog" aria-modal="true">
+        <form className="modal" onSubmit={handleSubmit}>
+    <header className="modal-header">
+      <button className="btn-ghost" type="button" onClick={onCancel}>Cancel</button>
+      <h2>{mode === 'text' ? 'New Text Note' : 'New Checklist'}</h2>
+      <button className="btn-save" type="submit" disabled={saving}>{saving ? 'Saving…' : 'Save'}</button>
+    </header>
 
-        <label htmlFor="title">Title</label>
-        <input id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+    <div className="field">
+      <label htmlFor="title">Title</label>
+      <input id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+    </div>
 
         {mode === 'text' ? (
-          <>
-            <label htmlFor="content">Content</label>
-            <textarea id="content" rows={6} value={content}
-              onChange={(e) => setContent(e.target.value)} />
-          </>
+          <div className="field">
+  <label htmlFor="content">Content</label>
+  <textarea id="content" rows={6} value={content}
+    onChange={(e) => setContent(e.target.value)} />
+</div>
         ) : (
-          <>
-            <p>Checklist Items</p>
-            {items.map((item, index) => (
-              <div key={index}>
-                <input type="checkbox" checked={item.isChecked}
-                  onChange={(e) => updateItem(index, { isChecked: e.target.checked })} />
-                <input value={item.content}
-                  onChange={(e) => updateItem(index, { content: e.target.value })} />
-                <button type="button" onClick={() => removeItem(index)}>✕</button>
-              </div>
-            ))}
-            <button type="button"
-              onClick={() => setItems([...items, { content: '', isChecked: false }])}>
-              + Add item
-            </button>
-          </>
+          <div className="field">
+    <label>Checklist Items</label>
+    {items.map((item, index) => (
+      <div className="item-row" key={index}>
+        <input type="checkbox" checked={item.isChecked}
+          onChange={(e) => updateItem(index, { isChecked: e.target.checked })} />
+        <input value={item.content}
+          onChange={(e) => updateItem(index, { content: e.target.value })} />
+        <button className="btn-icon" type="button" onClick={() => removeItem(index)}>✕</button>
+      </div>
+    ))}
+    <button className="btn-ghost" type="button"
+      onClick={() => setItems([...items, { content: '', isChecked: false }])}>
+      + Add item
+    </button>
+  </div>
         )}
 
-        <p>Choose Note Color</p>
-        {NOTE_COLOURS.map((c) => (
-          <button key={c} type="button" onClick={() => setColour(c)}
-            aria-pressed={colour === c}>
-            {c}{colour === c ? ' ✓' : ''}
-          </button>
-        ))}
-
-        {error && <p role="alert">{error}</p>}
+        <div className="field">
+  <label>Choose Note Color</label>
+  <div className="swatches">
+    {NOTE_COLOURS.map((c) => (
+      <button key={c} type="button" className="swatch"
+        style={{ background: `var(--note-${c})` }}
+        onClick={() => setColour(c)} aria-pressed={colour === c} aria-label={c} />
+    ))}
+  </div>
+</div>
+        <div className="form-error">
+          {error && <p role="alert">{error}</p>}
+        </div>
       </form>
     </div>
   );
