@@ -4,5 +4,28 @@
     "@nestjs/typeorm": "^11.0.3",
     "pg": "^8.23.0",
     "typeorm": "^1.1.0"
-  }
+  },
+  "name": "todo-note",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {
+    "concurrently": "^10.0.5"
+  },
+  "scripts": {
+  "install:all": "cd'/Users/duchieu/Documents/IDC MetaServ/todo-note/api' && npm install && cd '/Users/duchieu/Documents/IDC MetaServ/todo-note/web' && npm install",
+  "dev": "concurrently \"cd '/Users/duchieu/Documents/IDC MetaServ/todo-note/api' && npm run start:dev\" \"cd '/Users/duchieu/Documents/IDC MetaServ/todo-note/web' && npm run dev\""
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PeterdhNgo/todo-note.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/PeterdhNgo/todo-note/issues"
+  },
+  "homepage": "https://github.com/PeterdhNgo/todo-note#readme"
 }

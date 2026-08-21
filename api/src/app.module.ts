@@ -20,6 +20,7 @@ import { NotesModule } from './notes/notes.module';
         database: config.get('DB_NAME'),
         autoLoadEntities: true,
         synchronize: true, //makes TypeORM auto-create tables from entities
+        logging: true,
       }),
     }),
     UsersModule,
